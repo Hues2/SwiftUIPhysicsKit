@@ -10,6 +10,12 @@ public struct PhysicsBody: Sendable, Hashable {
     
     // Shape
     public var shape: ColliderShape
+    
+    // Bounce
+    // (0 = no bounce, 1 = perfect bounce)
+    public var restitution: Double
+    // Helps stop infinite bouncing
+    public var linearDamping: Double
 
     /// Accumulated force for the current simulation step.
     public private(set) var accumulatedForce: Vector2 = .zero
@@ -18,12 +24,16 @@ public struct PhysicsBody: Sendable, Hashable {
         position: Vector2 = .zero,
         velocity: Vector2 = .zero,
         mass: Double = 1,
-        shape: ColliderShape = .circle(radius: 10)
+        shape: ColliderShape = .circle(radius: 10),
+        restitution: Double = 0.3,
+        linearDamping: Double = .zero
     ) {
         self.position = position
         self.velocity = velocity
         self.mass = max(mass, minMass) // avoid division by zero
         self.shape = shape
+        self.restitution = restitution
+        self.linearDamping = linearDamping
     }
 
     public var inverseMass: Double {
