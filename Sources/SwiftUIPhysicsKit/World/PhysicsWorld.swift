@@ -33,7 +33,7 @@ public struct PhysicsWorld: Sendable {
 
 // MARK: Step funcitonality for 1 body
 private extension PhysicsWorld {
-    mutating func stepBody(_ body: inout PhysicsBody, dt: Double) {
+    func stepBody(_ body: inout PhysicsBody, dt: Double) {
         // Get the gravity force
         let gravityForce = gravity * body.mass
         // Get the total force to be applied to the body
@@ -57,8 +57,8 @@ private extension PhysicsWorld {
 }
 
 // MARK: Resolve Bounds
-private extension PhysicsWorld {
-    mutating func resolveBounds(
+extension PhysicsWorld {
+    func resolveBounds(
         for body: inout PhysicsBody,
         in bounds: WorldBounds
     ) {
@@ -85,7 +85,7 @@ private extension PhysicsWorld {
         )
     }
     
-    mutating func resolveAxis(
+    func resolveAxis(
         body: inout PhysicsBody,
         minEdge: Double,
         maxEdge: Double,
@@ -117,8 +117,8 @@ private extension PhysicsWorld {
 }
 
 // MARK: Apply Damping
-private extension PhysicsWorld {
-    mutating func applyLinearDamping(to body: inout PhysicsBody, dt: Double) {
+extension PhysicsWorld {
+    func applyLinearDamping(to body: inout PhysicsBody, dt: Double) {
         guard body.linearDamping > 0 else { return }
         let k = max(0, 1 - body.linearDamping * dt)
         body.velocity *= k
