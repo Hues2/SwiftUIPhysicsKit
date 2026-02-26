@@ -6,6 +6,11 @@ F = m * a
 
 a = F / m
 
+Engine form:
+
+a = F * inverseMass
+where inverseMass = 1 / m
+
 ---
 
 ## Velocity Integration (Euler)

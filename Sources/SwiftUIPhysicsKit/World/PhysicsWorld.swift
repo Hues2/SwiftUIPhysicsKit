@@ -19,23 +19,20 @@ public struct PhysicsWorld: Sendable {
     /// Advances the simulation by `dt` seconds.
     public mutating func step(dt: Double) {
         guard dt > 0 else { return }
-
+        
         for i in bodies.indices {
-            // 1) Compute acceleration from forces + gravity            
-            var body = bodies[i]
-
-            let gravityForce = gravity * body.mass
-            let totalForce = body.accumulatedForce + gravityForce
-            let acceleration = totalForce * body.inverseMass
-
-            // 2) Integrate (Euler)
-            body.velocity += acceleration * dt
-            body.position += body.velocity * dt
-
-            // 3) Clear forces for next step
-            body.clearForces()
-
-            bodies[i] = body
+            // Get the gravity force
+            let gravityForce = gravity * bodies[i].mass
+            // Get the total force to be applied to the body
+            let totalForce = bodies[i].accumulatedForce + gravityForce
+            // Calculate the acceleration (a = F / m)
+            // Use inverse mass because divisions are more expensive than multiplications
+            let acceleration = totalForce * bodies[i].inverseMass
+            // Update the body's velocity and position
+            bodies[i].velocity += acceleration * dt
+            bodies[i].position += bodies[i].velocity * dt
+            // Prepare the body for the next step/iteration
+            bodies[i].clearForces()
         }
     }
 }
