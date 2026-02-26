@@ -7,6 +7,9 @@ public struct PhysicsBody: Sendable, Hashable {
     /// Mass in kg (or arbitrary units). Must be > 0.
     public var mass: Double
     private let minMass: Double = 0.000_001
+    
+    // Shape
+    public var shape: ColliderShape
 
     /// Accumulated force for the current simulation step.
     public private(set) var accumulatedForce: Vector2 = .zero
@@ -14,11 +17,13 @@ public struct PhysicsBody: Sendable, Hashable {
     public init(
         position: Vector2 = .zero,
         velocity: Vector2 = .zero,
-        mass: Double = 1
+        mass: Double = 1,
+        shape: ColliderShape = .circle(radius: 10)
     ) {
         self.position = position
         self.velocity = velocity
         self.mass = max(mass, minMass) // avoid division by zero
+        self.shape = shape
     }
 
     public var inverseMass: Double {
