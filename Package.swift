@@ -7,7 +7,7 @@ let package = Package(
     name: "SwiftUIPhysicsKit",
     platforms: [
         .iOS(.v16),
-        .macOS(.v13)
+        .macOS(.v15)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
